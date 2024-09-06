@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <style>
+        .custom-navbar {
+            background: linear-gradient(45deg, #ff6f61, #ffb88c);
+            color: white;
+        }
+    </style>
+</head>
+<body  style="background-color: whitesmoke;">
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <a class="navbar-brand" href="#">Certifications Portal</a>
+        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-target="#navbarNav" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/catalogue}">Catalogue</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/request}">Request Certification</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/profile}">Profile</a>
+                </li>
+                <!-- These links will only appear if userRole is ADMIN -->
+                <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                    <a class="nav-link" th:href="@{/admin/add-certification}">Add Certifications</a>
+                </li>
+                <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                    <a class="nav-link" th:href="@{/admin/add-user-certification}">Add User Certification</a>
+                </li>
+                <!-- Add more links as needed -->
+            </ul>
+            <!-- Add a class for flex and justify the logout to the right -->
+            <ul class="navbar-nav" style="margin-left: auto;">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- User Details Form -->
+    <h2>User Profile</h2>
+    <div class="alert alert-success" role="alert" th:if="${param.registerSuccess}">
+        Profile updated successfully.
+    </div>
+    <form method="post" th:action="@{/update}">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" id="name" name="name" required th:value="${user.name}" type="text">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" id="email" name="email" required th:value="${user.username}" type="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" id="password" name="password" type="password">
+            <small class="form-text text-muted">Leave blank to keep your current password.</small>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Profile</button>
+    </form>
+
+    <!-- Completed Certifications -->
+    <h3 class="mt-5">Completed Certifications</h3>
+    <div class="list-group">
+        <div th:each="certification : ${completedCertifications}">
+            <a class="list-group-item list-group-item-action"
+               th:href="@{/certification/{id}(id=${certification.certification.id})}">
+                <h5 th:text="${certification.certification.name}">Certification Name</h5>
+                <p th:text="'Obtained on: ' + ${#dates.format(certification.dateObtained, 'yyyy-MM-dd')}"></p>
+                <p th:text="'Expires on: ' + ${#dates.format(certification.expiryDate, 'yyyy-MM-dd')}"></p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Flagged Certifications -->
+    <h3 class="mt-5">Flagged Certifications</h3>
+    <div class="list-group">
+        <div th:each="certification : ${flaggedCertifications}">
+            <a class="list-group-item list-group-item-action"
+               th:href="@{/certification/{id}(id=${certification.certification.id})}">
+                <h5 th:text="${certification.certification.name}">Certification Name</h5>
+                <p th:text="'Flagged on: ' + ${#dates.format(certification.dateFlagged, 'yyyy-MM-dd')}"></p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Certification Catalogue</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <style>
+        .custom-navbar {
+            background: linear-gradient(45deg, #ff6f61, #ffb88c);
+            color: white;
+        }
+    </style>
+</head>
+<body  style="background-color: whitesmoke;">
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <a class="navbar-brand" href="#">Certifications Portal</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/catalogue}">Catalogue</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/request}">Request Certification</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/profile}">Profile</a>
+                </li>
+                <!-- These links will only appear if userRole is ADMIN -->
+                <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                    <a class="nav-link" th:href="@{/admin/add-certification}">Add Certifications</a>
+                </li>
+                <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                    <a class="nav-link" th:href="@{/admin/add-user-certification}">Add User Certification</a>
+                </li>
+                <!-- Add more links as needed -->
+            </ul>
+            <!-- Add a class for flex and justify the logout to the right -->
+            <ul class="navbar-nav" style="margin-left: auto;">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2>Certification Catalogue</h2>
+    <div class="alert alert-success" role="alert" th:if="${param.registerSuccess}">
+        Request successfully submitted.
+    </div>
+    <div class="alert alert-danger" role="alert" th:if="${param.error}">
+        Request failed. Check your input parameters and try again.
+    </div>
+    <form method="get" th:action="@{/catalogue/search}">
+        <input class="form-control" name="query" placeholder="Search by name or skill" type="text"/>
+        <button class="btn btn-primary mt-2" type="submit">Search</button>
+    </form>
+
+    <div class="row mt-4" th:if="${certifications != null}">
+        <div class="col-md-4" th:each="certification : ${certifications}">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${certification.name}">Certification Name</h5>
+                    <p class="card-text" th:text="${certification.examBoard}">Exam Board</p>
+                    <a class="btn btn-primary" th:href="@{/certification/{id}(id=${certification.id})}">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

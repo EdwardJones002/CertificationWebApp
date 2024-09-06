@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add User Certifications</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <style>
+        .custom-navbar {
+            background: linear-gradient(45deg, #ff6f61, #ffb88c);
+            color: white;
+        }
+    </style>
+</head>
+<body  style="background-color: whitesmoke;">
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <a class="navbar-brand" href="#">Certifications Portal</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/catalogue}">Catalogue</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/request}">Request Certification</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/profile}">Profile</a>
+                </li>
+                <!-- These links will only appear if userRole is ADMIN -->
+                <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                    <a class="nav-link" th:href="@{/admin/add-certification}">Add Certifications</a>
+                </li>
+                <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                    <a class="nav-link" th:href="@{/admin/add-user-certification}">Add User Certification</a>
+                </li>
+                <!-- Add more links as needed -->
+            </ul>
+            <!-- Add a class for flex and justify the logout to the right -->
+            <ul class="navbar-nav" style="margin-left: auto;">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2 class="text-center mt-4">Add User Certification</h2>
+
+    <!-- Display success or error messages -->
+    <div class="alert alert-success" role="alert" th:if="${successMessage}">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div class="alert alert-danger" role="alert" th:if="${errorMessage}">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <!-- Add User Certification Form -->
+    <form method="post" th:action="@{/admin/add-user-certification}">
+        <div class="form-group">
+            <label for="userId">User ID</label>
+            <input class="form-control" id="userId" name="userId" required type="text">
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" name="username" required type="text">
+        </div>
+        <div class="form-group">
+            <label for="certificationId">Certification ID</label>
+            <input class="form-control" id="certificationId" name="certificationId" required type="text">
+        </div>
+        <div class="form-group">
+            <label for="dateObtained">Date Obtained</label>
+            <input class="form-control" id="dateObtained" name="dateObtained" required type="date">
+        </div>
+        <div class="form-group">
+            <label for="dateExpired">Date Expired</label>
+            <input class="form-control" id="dateExpired" name="dateExpired" type="date">
+        </div>
+        <div class="text-left mt-3">
+            <button class="btn btn-primary btn-block" type="submit">Add User Certification</button>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

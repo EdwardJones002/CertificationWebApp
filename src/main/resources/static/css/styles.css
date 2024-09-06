@@ -1,0 +1,86 @@
+/* Global Body Styles */
+body {
+    background: linear-gradient(to right, darkolivegreen, mediumpurple);
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Common Container Styling */
+.container {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin-top: 50px;
+    color: white;
+}
+
+/* Headings */
+h2, h3 {
+    color: #ffcc00;
+    text-shadow: 1px 1px 5px #000;
+    text-align: center;
+}
+
+/* Form Labels */
+.form-group label {
+    color: #f8f9fa;
+}
+
+/* Form Inputs */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-control:focus {
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #ffcc00;
+    border: none;
+    color: #333;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #ffd633;
+}
+
+.btn-secondary {
+    background-color: #00bfff;
+    border: none;
+    color: white;
+    width: 100%;
+}
+
+.btn-secondary:hover {
+    background-color: #33ccff;
+}
+
+/* Alerts */
+.alert {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: #f8d7da;
+    border: none;
+}
+
+.alert-success {
+    background-color: rgba(0, 255, 0, 0.2);
+    color: #d4edda;
+}
+
+/* Centered Text */
+.text-center {
+    text-align: center;
+}
