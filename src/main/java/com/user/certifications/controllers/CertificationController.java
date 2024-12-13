@@ -8,6 +8,7 @@ import com.user.certifications.repositories.CertificationRepository;
 import com.user.certifications.repositories.RequestedCertificationRepository;
 import com.user.certifications.repositories.UserFlaggedCertificationRepository;
 import com.user.certifications.repositories.UserRepository;
+import com.user.certifications.servicesImp.EmailService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,6 +46,8 @@ public class CertificationController {
         return "certification";
     }
 
+    private EmailService emailService;
+
     @PostMapping("/certification/{id}/flag")
 
     public String flagCertification(Authentication authentication, @PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -61,6 +64,13 @@ public class CertificationController {
         flagged.setCertification(certification);
         flagged.setDateFlagged(new Date());
         userFlaggedCertificationRepository.save(flagged);
+
+        // Send email notification
+        String toEmail = "ejukesjones@gmail.com";
+        String subject = "Certification Flagged by " + user1.getUsername();
+        String body = String.format("User %s has flagged the certification: %s", user1.getUsername(), certification.getName());
+        emailService.sendCertificationRequestEmail(toEmail, subject, body);
+
         redirectAttributes.addAttribute("registerSuccess", true);
         return "redirect:/catalogue";
     }
