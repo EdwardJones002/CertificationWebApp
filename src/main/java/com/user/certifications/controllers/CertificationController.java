@@ -43,6 +43,11 @@ public class CertificationController {
         model.addAttribute("userRole", userRole);
         Certification certification = certificationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid certification ID:" + id));
         model.addAttribute("certification", certification);
+
+        User user = userRepository.findByUsername(authentication.getName())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        boolean alreadyFlagged = userFlaggedCertificationRepository.existsByUserAndCertification(user, certification);
+        model.addAttribute("alreadyFlagged", alreadyFlagged);
         return "certification";
     }
 

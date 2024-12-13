@@ -59,8 +59,11 @@
     </p>
 
 
-    <form method="post" th:action="@{/certification/{id}/flag(id=${certification.id})}">
-        <button class="btn btn-warning" type="submit">Flag Certification</button>
+    <form th:action="@{'/certification/' + ${certification.id} + '/flag'}" method="post">
+        <button type="submit"
+                th:disabled="${alreadyFlagged}"
+                th:text="${alreadyFlagged} ? 'Already Flagged' : 'Flag Certification'">
+        </button>
     </form>
 </div>
 </body>

@@ -8,6 +8,9 @@ public class EmailService {
 
     private JavaMailSender javaMailSender;
 
+    public EmailService(JavaMailSender mailSender) {
+        this.javaMailSender = mailSender;
+    }
     public void sendCertificationRequestEmail(String toEmail, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
