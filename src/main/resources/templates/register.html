@@ -41,12 +41,14 @@
             <input class="form-control" id="password" name="password" required type="password">
         </div>
         <div class="text-center mt-3">
-            <button class="btn btn-primary btn-block" type="submit">Register</button>
+            <button class="btn btn-primary btn-block" type="submit" th:href="@{/verify}">Register</button>
             <a class="btn btn-secondary" th:href="@{/login}">Back to Login</a>
         </div>
+        <!-- Error message -->
+        <div th:if="${error}" class="alert alert-danger mt-3">
+            <p th:text="${error}"></p>
+        </div>
     </form>
-
-    <!-- Back to Login Link -->
 
 </div>
 
