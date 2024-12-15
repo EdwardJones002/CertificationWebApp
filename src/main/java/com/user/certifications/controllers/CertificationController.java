@@ -36,6 +36,22 @@ public class CertificationController {
     @Autowired
     private RequestedCertificationRepository requestedCertificationRepository;
 
+    private EmailService emailService;
+
+    public CertificationController(
+            CertificationRepository certificationRepository,
+            UserFlaggedCertificationRepository userFlaggedCertificationRepository,
+            UserRepository userRepository,
+            RequestedCertificationRepository requestedCertificationRepository,
+            EmailService emailService
+    ) {
+        this.certificationRepository = certificationRepository;
+        this.userFlaggedCertificationRepository = userFlaggedCertificationRepository;
+        this.userRepository = userRepository;
+        this.requestedCertificationRepository = requestedCertificationRepository;
+        this.emailService = emailService;
+    }
+
     @GetMapping("/certification/{id}")
     public String viewCertification(Authentication authentication, @PathVariable Long id, Model model) {
 
@@ -50,8 +66,6 @@ public class CertificationController {
         model.addAttribute("alreadyFlagged", alreadyFlagged);
         return "certification";
     }
-
-    private EmailService emailService;
 
     @PostMapping("/certification/{id}/flag")
 
