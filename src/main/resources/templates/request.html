@@ -4,60 +4,141 @@
     <title>Request New Certification</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <style>
+        body {
+            background: linear-gradient(to right, #424242, #898a8c);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding-top: 60px;
+        }
+
         .custom-navbar {
-            background: linear-gradient(45deg, #ff6f61, #ffb88c);
-            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2;
+            display: flex;
+            align-items: center; /* Align items vertically */
+            height: 130px; /* Consistent height */
+        }
+
+        .navbar-nav .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .navbar-nav .nav-item img {
+            object-fit: contain;
+            max-height: 100px;
+            max-width: 150px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 5px;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: none;
+            z-index: 3;
+            position: relative;
+            flex-grow: 1;
+            padding-top: 5px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            border-radius: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: #ff6f61;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
-<body  style="background-color: whitesmoke;">
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
-        <a class="navbar-brand" href="#">Certifications Portal</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/home}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/catalogue}">Catalogue</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/request}">Request Certification</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/profile}">Profile</a>
-                </li>
-                <!-- These links will only appear if userRole is ADMIN -->
-                <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
-                    <a class="nav-link" th:href="@{/admin/add-certification}">Add Certifications</a>
-                </li>
-                <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
-                    <a class="nav-link" th:href="@{/admin/add-user-certification}">Add User Certification</a>
-                </li>
-                <!-- Add more links as needed -->
-            </ul>
-            <!-- Add a class for flex and justify the logout to the right -->
-            <ul class="navbar-nav" style="margin-left: auto;">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
 
-    <h2>Request New Certification</h2>
-    <div class="alert alert-danger" role="alert" th:if="${param.error}">
-        Request failed. Check your input parameters and try again.
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto">
+            <ul class="navbaar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link"><img src="/CapgeminiLogo.png" alt="Background Logo" width="250" height="200"></a>
+                </li>
+            </ul>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/home}" title="Home"><img src="/home.png" width="150" height="100"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/catalogue}" title="Catalogue"><img src="/catalog.png" width="150" height="100"></a>
+            </li>
+            <li class="nav-item" th:if="${userRole != 'ROLE_ADMIN'}">
+                <a class="nav-link" th:href="@{/request}" title="Request Certification"><img src="/request.png" width="150" height="100"></a>
+            </li>
+            <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                <a class="nav-link" th:href="@{/admin/add-certification}">Add Certifications</a>
+            </li>
+            <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                <a class="nav-link" th:href="@{/admin/add-user-certification}">Add User Certification</a>
+            </li>
+        </ul>
+        <!-- Right-aligned items -->
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item active" th:if="${userRole != 'ROLE_ADMIN'}">
+                <a class="nav-link" th:href="@{/profile}" title="User Profile"><img src="/profile.png" width="100" height="100"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}" title="Logout"><img src="/exit.png" width="100" height="100"></a>
+            </li>
+        </ul>
     </div>
-    <div class="alert alert-success" role="alert" th:if="${param.registerSuccess}">
-        Request successfully submitted.
-    </div>
-    <form method="post" th:action="@{/request}">
+</nav>
+    <div class="container">
+        <div class="alert alert-danger" role="alert" th:if="${param.error}">
+            Request failed. Check your input parameters and try again.
+        </div>
+        <div class="alert alert-success" role="alert" th:if="${param.registerSuccess}">
+            Request successfully submitted.
+        </div>
+        <h2>Request New Certification</h2>
+        <form method="post" th:action="@{/request}">
         <div class="form-group">
             <label for="name">Name</label>
             <input class="form-control" id="name" name="name" required type="text"/>
         </div>
+
         <div class="form-group">
             <label for="examBoard">Exam Board</label>
             <input class="form-control" id="examBoard" name="examBoard" required type="text"/>
@@ -81,10 +162,11 @@
         <div class="text-left mt-3">
             <button class="btn btn-primary" type="submit">Submit Request</button>
         </div>
-
     </form>
-    <h3 class="mt-5">Current Requested Certifications</h3>
+    </div>
+    <div class="container">
     <div class="list-group">
+        <h3 class="mt-5">Current Requested Certifications</h3>
         <div th:each="certification : ${requestedCertifications}">
             <a class="list-group-item list-group-item-action" target="_blank" th:href="${certification.hyperlink}">
                 <h5 th:text="${certification.name}">Certification Name</h5>
@@ -96,5 +178,12 @@
         </div>
     </div>
 </div>
+
+<footer>
+    <p>&copy; 2024 Certifications Portal | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</footer>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
