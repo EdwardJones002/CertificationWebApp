@@ -21,17 +21,18 @@
             <input class="form-control" name="query" placeholder="Search by name or skill" type="text"/>
             <button class="btn btn-primary mt-2" type="submit">Search</button>
         </form>
-        <div class="col-md-4" th:each="certification : ${certifications}">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${certification.name}">Certification Name</h5>
-                    <p class="card-text" th:text="${certification.examBoard}">Exam Board</p>
-                    <a class="btn btn-primary" th:href="@{/certification/{id}(id=${certification.id})}">View</a>
+        <div class="row mt-4">
+            <div class="col-md-4" th:each="certification : ${certifications}">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${certification.name}">Certification Name</h5>
+                        <p class="card-text" th:text="${certification.examBoard}">Exam Board</p>
+                        <a class="btn btn-primary" th:href="@{/certification/{id}(id=${certification.id})}">View</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <footer>
     <p>&copy; 2024 Certifications Portal | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
 </footer>
