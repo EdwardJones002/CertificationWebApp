@@ -5,6 +5,9 @@
         <a class="navbar-brand" th:href="@{/home}">
             <img src="/CapgeminiLogo.png" alt="Background Logo" style="max-height: 60px; width: auto;">
         </a>
+        <a>
+            <h1>Certification Catalogue</h1>
+        </a>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item" th:if="${userRole != 'ROLE_ADMIN'}">
                 <a class="nav-link" th:href="@{/profile}" title="User Profile"> Profile</a>

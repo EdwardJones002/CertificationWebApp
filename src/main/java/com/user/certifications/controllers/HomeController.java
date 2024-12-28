@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Controller
 @Transactional
@@ -29,9 +31,13 @@ public class HomeController {
         List<Certification> latestCertifications = certificationRepository.findTop5ByOrderByDateAddedDesc();
         model.addAttribute("latestCertifications", latestCertifications);
 
-        // Group by Exam Board
+        //List 3 different certifications by exam board
         List<Certification> certificationsByExamBoard = certificationRepository.findAllByOrderByExamBoardAscDateAddedDesc();
-        model.addAttribute("certificationsByExamBoard", certificationsByExamBoard);
+        List<String> allExamBoards = certificationsByExamBoard.stream().map(Certification::getExamBoard).distinct().collect(Collectors.toList());
+        Collections.shuffle(allExamBoards);
+        List<String> randomExamBoards = allExamBoards.stream().limit(1).collect(Collectors.toList());
+        List<Certification> oneCertificationsByExamBoard = certificationsByExamBoard.stream().filter(cert -> randomExamBoards.contains(cert.getExamBoard())).collect(Collectors.toList());
+        model.addAttribute("certificationsByExamBoard", oneCertificationsByExamBoard);
 
         // Group by Random Skill
         List<String> skills = certificationRepository.findDistinctSkills();
