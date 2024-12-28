@@ -1,86 +1,117 @@
-/* Global Body Styles */
 body {
-    background: linear-gradient(to right, darkolivegreen, mediumpurple);
-    color: white;
+    background-color: white;
     height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Arial', sans-serif;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding-top: 150px;
 }
 
-/* Common Container Styling */
-.container {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin-top: 50px;
-    color: white;
-}
-
-/* Headings */
-h2, h3 {
-    color: #ffcc00;
-    text-shadow: 1px 1px 5px #000;
-    text-align: center;
-}
-
-/* Form Labels */
-.form-group label {
-    color: #f8f9fa;
-}
-
-/* Form Inputs */
-.form-control {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.form-control:focus {
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
-}
-
-/* Buttons */
-.btn-primary {
-    background-color: #ffcc00;
-    border: none;
-    color: #333;
+.custom-navbar {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
     width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    height: 70px;
+    border-radius: 0;
+}
+
+.top-navbar {
+    background-color: #f8f9fa;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bottom-navbar {
+    background-color: #2574fa;
+    top: 70px;
+    padding: 10px 20px;
+    postion: fixed;
+    z-index: 999;
+    width: 100%;
+    justify-content: center;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.navbar-nav .nav-link:hover {
+    text-decoration: underline;
+    color: #ff6f61;
+}
+
+.navbar-nav .nav-item img {
+    object-fit: contain;
+    max-height: 50px;
+}
+
+.top-navbar .navbar-brand img {
+    max-height: 60px;
+}
+
+footer {
+    background-color: #898a8c;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+footer a:default {
+    color: #000000;
+}
+
+h2 {
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+p{
+    color: #000000;
+}
+
+.seconCn{
+    background-color: white;
+    color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #2574fa;
+    border: none;
 }
 
 .btn-primary:hover {
-    background-color: #ffd633;
+    background-color: #3355ff;
 }
 
 .btn-secondary {
-    background-color: #00bfff;
+    background-color: #2574fa;
     border: none;
-    color: white;
-    width: 100%;
 }
 
 .btn-secondary:hover {
-    background-color: #33ccff;
+    background-color: #3355ff;
 }
-
-/* Alerts */
-.alert {
-    background-color: rgba(255, 0, 0, 0.2);
-    color: #f8d7da;
-    border: none;
-}
-
-.alert-success {
-    background-color: rgba(0, 255, 0, 0.2);
-    color: #d4edda;
-}
-
-/* Centered Text */
-.text-center {
+.forgot-password {
+    display: block;
+    margin-top: 15px;
     text-align: center;
+    font-size: 14px;
 }
+

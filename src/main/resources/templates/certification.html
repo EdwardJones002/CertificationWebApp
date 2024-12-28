@@ -3,153 +3,30 @@
 <head>
     <title>Certification Details</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-    <style>
-        body {
-            background: linear-gradient(to right, #424242, #898a8c);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding-top: 60px;
-        }
-
-        .custom-navbar {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 2;
-            display: flex;
-            height: 130px;
-        }
-
-        .custom-navbar {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 2;
-            display: flex;
-            align-items: center; /* Align items vertically */
-            height: 130px; /* Consistent height */
-        }
-
-        .navbar-nav .nav-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        .navbar-nav .nav-item img {
-            object-fit: contain;
-        }
-
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            margin-top: 50px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: none;
-            z-index: 3;
-            position: relative;
-            flex-grow: 1;
-            padding-top: 100px;
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .card {
-            border-radius: 10px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        footer {
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            text-align: center;
-            position: relative;
-            width: 100%;
-            margin-top: auto;
-        }
-
-        footer a {
-            color: #ff6f61;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
 <body  style="background-color: whitesmoke;">
-<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
-    <div class="container-fluid">
-        <!-- Left-aligned items -->
-        <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-                <a class="nav-link"><img src="/CapgeminiLogo.png" alt="Background Logo" width="150" height="100"></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/home}" title="Home"><img src="/home.png" width="100" height="100"></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/catalogue}" title="Catalogue"><img src="/catalog.png" width="100" height="100"></a>
-            </li>
-            <li class="nav-item" th:if="${userRole != 'ROLE_ADMIN'}">
-                <a class="nav-link" th:href="@{/request}" title="Request Certification"><img src="/request.png" width="100" height="100"></a>
-            </li>
-            <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
-                <a class="nav-link" th:href="@{/admin/add-certification}">Add Certifications</a>
-            </li>
-            <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
-                <a class="nav-link" th:href="@{/admin/add-user-certification}">Add User Certification</a>
-            </li>
-        </ul>
-        <!-- Right-aligned items -->
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item active" th:if="${userRole != 'ROLE_ADMIN'}">
-                <a class="nav-link" th:href="@{/profile}" title="User Profile"><img src="/profile.png" width="100" height="100"></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/}" title="Logout"><img src="/exit.png" width="100" height="100"></a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-    <h2 th:text="${certification.name}">Certification Name</h2>
-    <p><strong>Exam Board:</strong> <span th:text="${certification.examBoard}">Exam Board</span></p>
-    <p><strong>Skill:</strong> <span th:text="${certification.skills}">Skill</span></p>
-    <p><strong>Learning Time:</strong> <span th:text="${certification.learningTime}">Learning Time</span></p>
-    <p><strong>About:</strong> <span th:text="${certification.about}">About the certification...</span></p>
-    <p><strong>Link:</strong>
-        <a target="_blank"
-           th:href="${#strings.startsWith(certification.hyperlink, 'http') ? certification.hyperlink : 'http://' + certification.hyperlink}">
-            Go to Certification
-        </a>
-    </p>
+    <div th:replace="fragments/navbar.html"></div>
+    <div class="seconCn">
+        <h2 th:text="${certification.name}">Certification Name</h2>
+        <p><strong>Exam Board:</strong> <span th:text="${certification.examBoard}">Exam Board</span></p>
+        <p><strong>Skill:</strong> <span th:text="${certification.skills}">Skill</span></p>
+        <p><strong>Learning Time:</strong> <span th:text="${certification.learningTime}">Learning Time</span></p>
+        <p><strong>About:</strong> <span th:text="${certification.about}">About the certification...</span></p>
+        <p><strong>Link:</strong>
+            <a target="_blank"
+               th:href="${#strings.startsWith(certification.hyperlink, 'http') ? certification.hyperlink : 'http://' + certification.hyperlink}">
+                Go to Certification
+            </a>
+        </p>
 
 
-    <form th:action="@{'/certification/' + ${certification.id} + '/flag'}" method="post">
-        <button type="submit"
-                th:disabled="${alreadyFlagged}"
-                th:text="${alreadyFlagged} ? 'Already Flagged' : 'Flag Certification'">
-        </button>
-    </form>
+        <form th:action="@{'/certification/' + ${certification.id} + '/flag'}" method="post">
+            <button type="submit"
+                    th:disabled="${alreadyFlagged}"
+                    th:text="${alreadyFlagged} ? 'Already Flagged' : 'Flag Certification'">
+            </button>
+        </form>
 </div>
 
 <footer>

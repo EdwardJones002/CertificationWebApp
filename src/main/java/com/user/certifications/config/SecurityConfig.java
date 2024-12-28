@@ -23,14 +23,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests((requests) -> requests
-
-                .requestMatchers("/css/**","/js/**", "/templates/**", "/login", "/register", "/verify", "/forgot-password")
+                .requestMatchers("/css/**","/js/**", "/templates/**", "/login", "/register", "/verify", "/forgot-password", "/CapgeminiLogo.png")
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
-
                 .formLogin((form) -> form.loginPage("/login").defaultSuccessUrl("/home", true).failureUrl("/login?error=true").permitAll())
-
                 .logout((logout) -> logout.logoutUrl("/").logoutSuccessUrl("/login?logout").invalidateHttpSession(true) // Invalidate the session upon logout
                 .deleteCookies("JSESSIONID") // Delete session cookies
                 .permitAll())
