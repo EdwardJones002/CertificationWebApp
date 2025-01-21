@@ -1,18 +1,13 @@
-package com.user.certifications.db_tests;
-import com.user.certifications.entities.Certification;
+package com.user.certifications.tests;
 import com.user.certifications.entities.User;
-import com.user.certifications.entities.UserCertification;
 import com.user.certifications.repositories.CertificationRepository;
 import com.user.certifications.repositories.UserCertificationRepository;
 import com.user.certifications.repositories.UserRepository;
+import com.user.certifications.servicesImp.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Date;
-
-import static java.sql.DriverManager.println;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.internal.matchers.text.ValuePrinter.print;
 
@@ -29,6 +24,9 @@ public class user_tests {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserService userService;
     @Test
     void createUser() {
         //Create new User
@@ -109,6 +107,43 @@ public class user_tests {
         assertTrue(foundUser.isPresent());
         //Ensure Password is encoded
         assertTrue(passwordEncoder.matches("plaintextpassword", foundUser.get().getPassword()));
+        userRepository.delete(user);
+    }
+    @Test
+    void testUpdateUsername(){
+        //New User Creds
+        String newName = "ted";
+        String newPass = "Edward123";
+        String newEmail = "Edward@gmail.com";
+        //Create User
+        User user = new User();
+        user.setName("UpdateUser");
+        user.setUsername("updateUser@gmail.com");
+        user.setPassword(passwordEncoder.encode("plaintextpassword"));
+        user.setRole("USER");
+        userRepository.save(user);
+        assertTrue(userRepository.findByUsername("updateUser@gmail.com").isPresent());
+        userService.updateUserProfile(user, newName, newEmail, newPass);
+        //Ensure that updated user details are present in db
+        assertTrue(userRepository.findByUsername(newEmail).isPresent());
+        //Delete User
+        user.setUsername(newEmail);
+        user.setPassword(passwordEncoder.encode("Edward123"));
+        user.setName("Edward");
+        userRepository.delete(user);
+    }
+
+    @Test
+    void testUserLogin(){
+        //Create User
+        User user = new User();
+        user.setName("UserLogin");
+        user.setUsername("UserLogin@gmail.com");
+        user.setPassword(passwordEncoder.encode("userLogin"));
+        user.setRole("USER");
+        userRepository.save(user);
+
+        //Delete User
         userRepository.delete(user);
     }
 

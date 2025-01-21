@@ -21,6 +21,32 @@ body {
     border-radius: 0;
 }
 
+.status-Flagged {
+    color: black;
+    font-weight: bold;
+}
+
+.status-Submitted {
+    color: #ff6200;
+    font-weight: bold;
+}
+
+.status-Rejected {
+    color: red;
+    font-weight: bold;
+}
+
+.status-Approved {
+    color: green;
+    font-weight: bold;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
 .card {
     margin-bottom: 20px;
 }

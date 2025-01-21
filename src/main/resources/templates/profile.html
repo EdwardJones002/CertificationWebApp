@@ -36,11 +36,12 @@
         <!-- Completed Certifications -->
         <h3 class="mt-5">Completed Certifications</h3>
         <div class="list-group">
-            <div th:each="certification : ${completedCertifications}">
+            <div th:each="certification : ${completedCertifications}" class="mb-3">
                 <a class="list-group-item list-group-item-action" th:href="@{/certification/{id}(id=${certification.certification.id})}">
                     <h5 th:text="${certification.certification.name}">Certification Name</h5>
                     <p th:text="'Obtained on: ' + ${#dates.format(certification.dateObtained, 'yyyy-MM-dd')}"></p>
                     <p th:text="'Expires on: ' + ${#dates.format(certification.expiryDate, 'yyyy-MM-dd')}"></p>
+                    <p th:text="'Status: ' + ${certification.getStatus()}"></p>
                 </a>
             </div>
         </div>
@@ -48,12 +49,26 @@
         <!-- Flagged Certifications -->
         <h3 class="mt-5">Flagged Certifications</h3>
         <div class="list-group">
-            <div th:each="certification : ${flaggedCertifications}">
+            <div th:each="certification : ${flaggedCertifications}" class="mb-3">
                 <a class="list-group-item list-group-item-action" th:href="@{/certification/{id}(id=${certification.certification.id})}">
                     <h5 th:text="${certification.certification.name}">Certification Name</h5>
-                    <p th:text="'Flagged on: ' + ${#dates.format(certification.dateFlagged, 'yyyy-MM-dd')}"></p>
                 </a>
+                <p th:text="'Flagged on: ' + ${#dates.format(certification.dateFlagged, 'yyyy-MM-dd')}"></p>
+                <p class="mb-1"
+                   th:classappend="'status-' + ${certification.getStatus()}">
+                    <span th:text="${certification.getStatus()}"></span>
+                </p>
+                <div class="d-inline-flex">
+                    <form th:action="@{'/profile/flagged/delete/' + ${certification.id}}" method="post" class="me-2">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                    <form th:action="@{'/profile/flagged/submit/' + ${certification.id}}" method="post" class="me-2">
+                        <button type="submit" class="btn btn-success btn-sm"
+                        th:disabled="${certification.getStatus() == 'Submitted'}">Submit for Approval</button>
+                    </form>
+                </div>
             </div>
+
         </div>
     </div>
 

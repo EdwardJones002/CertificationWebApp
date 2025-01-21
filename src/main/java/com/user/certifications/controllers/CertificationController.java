@@ -68,11 +68,8 @@ public class CertificationController {
     }
 
     @PostMapping("/certification/{id}/flag")
-
     public String flagCertification(Authentication authentication, @PathVariable Long id, RedirectAttributes redirectAttributes) {
         Certification certification = certificationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid certification ID:" + id));
-
-
         UserFlaggedCertification flagged = new UserFlaggedCertification();
         User user1 = userRepository.findByUsername(authentication.getName()).get();
         if(userFlaggedCertificationRepository.existsByUserAndCertification(user1,certification)){
@@ -92,6 +89,44 @@ public class CertificationController {
 
         redirectAttributes.addAttribute("registerSuccess", true);
         return "redirect:/catalogue";
+    }
+
+    @PostMapping("/profile/flagged/delete/{id}")
+    public String deleteFlaggedCertification(Authentication authentication, @PathVariable Long id, RedirectAttributes redirectAttributes){
+        User user2 = userRepository.findByUsername(authentication.getName()).get();
+        UserFlaggedCertification flaggedCert = userFlaggedCertificationRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid flagged certification ID: " + id));
+
+        if(!flaggedCert.getUser().equals(user2)){
+            redirectAttributes.addAttribute("error", "You are not authorized to delete this flagged certification.");
+            return "redirect:/profile";
+        }
+        userFlaggedCertificationRepository.delete(flaggedCert);
+        redirectAttributes.addAttribute("User Flagged Certification Deleted", true);
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/profile/flagged/submit/{id}")
+    public String submitCertificationForReview(Authentication authentication, @PathVariable Long id, RedirectAttributes redirectAttributes){
+        User user3 = userRepository.findByUsername(authentication.getName())
+               .orElseThrow(() -> new IllegalArgumentException("User Not Found"));
+        UserFlaggedCertification flaggedCert1 = userFlaggedCertificationRepository.findById(id)
+               .orElseThrow(() -> new IllegalArgumentException("Certification NOT Found"));
+        if(!flaggedCert1.getUser().equals(user3)){
+            redirectAttributes.addAttribute("error", "You are not authorized to delete this flagged certification.");
+            return "redirect:/profile";
+        }
+        flaggedCert1.setStatus("Submitted");
+        userFlaggedCertificationRepository.save(flaggedCert1);
+
+        //Send Email
+        String toEmail = "ejukesjones@gmail.com";
+        String subject = "Certification Submitted for Approval by " + user3.getUsername();
+        String body = String.format("User %s has requested you approve their certification: %s", user3.getUsername(), flaggedCert1.getCertification().getName(), " Please Contact them at: ", user3.getUsername());
+        emailService.sendCertificationRequestEmail(toEmail, subject, body);
+
+        redirectAttributes.addAttribute("submitSuccess", true);
+        return "redirect:/profile";
     }
 
     @GetMapping("/admin/add-certification")

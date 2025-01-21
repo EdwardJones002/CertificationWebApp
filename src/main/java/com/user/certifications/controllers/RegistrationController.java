@@ -46,6 +46,7 @@ public class RegistrationController {
     @PostMapping("/register")
     public String registerUser(@RequestParam String name, @RequestParam String email, @RequestParam String password, RedirectAttributes redirectAttributes) {
         // Check if user already exists
+        System.out.println("You are in the function");
         if (userRepository.findByUsername(email).isPresent()) {
             redirectAttributes.addAttribute("error", true);
             return "redirect:/register";
@@ -65,7 +66,7 @@ public class RegistrationController {
             redirectAttributes.addFlashAttribute("error", "Failed to send Verification Code");
             return "redirect:/register";
         }
-
+        System.out.println("You are being redirected to verify page");
         return "redirect:/verify";
     }
 

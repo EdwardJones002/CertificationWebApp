@@ -42,7 +42,7 @@ public class DataInitializer {
             user.setPassword(passwordEncoder.encode("abcd1234"));
             user.setRole("ADMIN");
             userRepository.save(user);
-            System.out.println("Initialized user Admin with email mansoor@gmail.com and encoded password.");
+            System.out.println("Initialized user Admin with email admin@gmail.com and encoded password.");
         } else {
             System.out.println("User with email admin@gmail.com already exists.");
         }

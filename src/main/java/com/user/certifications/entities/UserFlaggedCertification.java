@@ -27,4 +27,14 @@ public class UserFlaggedCertification {
     private Certification certification;
 
     private Date dateFlagged;
+
+    private String status = "Flagged";
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

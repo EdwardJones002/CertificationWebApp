@@ -26,15 +26,16 @@ public class SecurityConfig {
                 .requestMatchers("/css/**","/js/**", "/templates/**", "/login", "/register", "/verify", "/forgot-password", "/CapgeminiLogo.png")
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/profile/flagged/delete/**").authenticated()
                 .anyRequest().authenticated())
                 .formLogin((form) -> form.loginPage("/login").defaultSuccessUrl("/home", true).failureUrl("/login?error=true").permitAll())
                 .logout((logout) -> logout.logoutUrl("/").logoutSuccessUrl("/login?logout").invalidateHttpSession(true) // Invalidate the session upon logout
                 .deleteCookies("JSESSIONID") // Delete session cookies
                 .permitAll())
-
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Session creation policy
                 .maximumSessions(1) // Allow only one session per user
                 .expiredUrl("/login?sessionExpired") // Redirect to a specific URL if the session expires
+
         );
 
         return http.build();
