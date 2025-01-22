@@ -46,6 +46,14 @@ button:disabled {
     cursor: not-allowed;
     opacity: 0.65;
 }
+td {
+    width: 14%;  /* Each day column */
+    height: 80px;  /* Increase height for days with events */
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    vertical-align: top;
+}
 
 .card {
     margin-bottom: 20px;

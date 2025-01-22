@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <style>
+        .event-list {
+            margin-top: 20px;
+        }
+        .event-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        .event-title {
+            font-weight: bold;
+        }
+        .event-dates {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar.html"></div>
+<div class="container">
+    <!-- Form to select year and month -->
+    <form action="/events" method="get" class="form-inline mb-4">
+        <label for="month" class="mr-2">Month:</label>
+        <select name="month" id="month" class="form-control mb-2 mr-2" th:value="${month}">
+            <option value="1" th:selected="${month == 1}">January</option>
+            <option value="2" th:selected="${month == 2}">February</option>
+            <option value="3" th:selected="${month == 3}">March</option>
+            <option value="4" th:selected="${month == 4}">April</option>
+            <option value="5" th:selected="${month == 5}">May</option>
+            <option value="6" th:selected="${month == 6}">June</option>
+            <option value="7" th:selected="${month == 7}">July</option>
+            <option value="8" th:selected="${month == 8}">August</option>
+            <option value="9" th:selected="${month == 9}">September</option>
+            <option value="10" th:selected="${month == 10}">October</option>
+            <option value="11" th:selected="${month == 11}">November</option>
+            <option value="12" th:selected="${month == 12}">December</option>
+        </select>
+
+        <label for="year" class="mr-2">Year:</label>
+        <input type="number" name="year" id="year" class="form-control mb-2" th:value="${year != null ? year : 2025}" min="2000" max="2100">
+        <button type="submit" class="btn btn-primary mb-2">View Events</button>
+    </form>
+
+    <!-- List Events for the Month -->
+    <div class="event-list">
+        <div th:each="monthEntry : ${eventsByMonth}">
+            <h3 th:text="${monthEntry.key}">Month Name</h3>
+            <div th:each="event : ${monthEntry.value}" class="event-item">
+                <div class="event-title" th:text="${event.title}"></div>
+                <div class="event-dates">
+                    <span th:text="'From: ' + ${event.startDate}"></span> |
+                    <span th:text="'To: ' + ${event.endDate}"></span>
+                </div>
+                <div class="event-link">
+                    <a th:href="${event.hyperlink}" target="_blank" th:text="'More Info'"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

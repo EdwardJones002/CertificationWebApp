@@ -28,6 +28,9 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/catalogue}" title="Catalogue">Catalogue</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/events}" title="Calendar">Event Calendar</a>
+            </li>
             <li class="nav-item" th:if="${userRole != 'ROLE_ADMIN'}">
                 <a class="nav-link" th:href="@{/request}" title="Request Certification">Request Certification</a>
             </li>
@@ -36,6 +39,9 @@
             </li>
             <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
                 <a class="nav-link" th:href="@{/admin/add-user-certification}" title="Add User Certification">Add User Certification</a>
+            </li>
+            <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                <a class="nav-link" th:href="@{/add-event}" title="Add Event">Add Event</a>
             </li>
         </ul>
     </div>

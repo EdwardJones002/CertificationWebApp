@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CertificationRepository extends JpaRepository<Certification, Long> {
@@ -21,4 +22,6 @@ public interface CertificationRepository extends JpaRepository<Certification, Lo
     List<Certification> findByNameContainingIgnoreCaseOrSkillsContainingIgnoreCase(String query, String query1);
 
     boolean existsByHyperlink(String hyperlink);
+
+    Optional<Certification> findByNameIgnoreCase(String name);
 }
