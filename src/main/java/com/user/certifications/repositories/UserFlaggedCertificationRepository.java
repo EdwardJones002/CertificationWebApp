@@ -16,4 +16,6 @@ public interface UserFlaggedCertificationRepository extends JpaRepository<UserFl
     void deleteAllByUserAndCertification(User user, Certification certification);
 
     boolean existsByUserAndCertification(User user1, Certification certification);
+
+    UserFlaggedCertification findByCertificationNameAndUserUsername(String certName, String username);
 }

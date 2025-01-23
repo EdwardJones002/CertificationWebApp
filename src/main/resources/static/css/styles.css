@@ -47,8 +47,8 @@ button:disabled {
     opacity: 0.65;
 }
 td {
-    width: 14%;  /* Each day column */
-    height: 80px;  /* Increase height for days with events */
+    width: 14%;
+    height: 80px;
     padding: 10px;
     border: 1px solid #ccc;
     text-align: center;

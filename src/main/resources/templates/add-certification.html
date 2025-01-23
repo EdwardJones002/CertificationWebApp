@@ -9,7 +9,6 @@
 <body  style="background-color: whitesmoke;">
 <div th:replace="fragments/navbar.html"></div>
 <div class="container">
-    <!-- Page Title -->
     <h2 class="text-center mt-4">Add a New Certification</h2>
 
     <!-- Success Message -->
@@ -19,8 +18,6 @@
     <div class="alert alert-danger" role="alert" th:if="${errorMessage}">
         <span th:text="${errorMessage}"></span>
     </div>
-
-    <!-- Add Certification Form -->
     <form method="post" th:action="@{/admin/add-certification}">
         <div class="form-group">
             <label for="name">Certification Name</label>
@@ -52,8 +49,6 @@
 
     </form>
 </div>
-
-<!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>

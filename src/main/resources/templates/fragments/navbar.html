@@ -43,6 +43,9 @@
             <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
                 <a class="nav-link" th:href="@{/add-event}" title="Add Event">Add Event</a>
             </li>
+            <li class="nav-item" th:if="${userRole == 'ROLE_ADMIN'}">
+                <a class="nav-link" th:href="@{/admin-flagged-certifications}" title="Review Certifications">Review Certifications</a>
+            </li>
         </ul>
     </div>
 </nav>

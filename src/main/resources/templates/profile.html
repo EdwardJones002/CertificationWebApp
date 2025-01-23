@@ -41,7 +41,6 @@
                     <h5 th:text="${certification.certification.name}">Certification Name</h5>
                     <p th:text="'Obtained on: ' + ${#dates.format(certification.dateObtained, 'yyyy-MM-dd')}"></p>
                     <p th:text="'Expires on: ' + ${#dates.format(certification.expiryDate, 'yyyy-MM-dd')}"></p>
-                    <p th:text="'Status: ' + ${certification.getStatus()}"></p>
                 </a>
             </div>
         </div>
